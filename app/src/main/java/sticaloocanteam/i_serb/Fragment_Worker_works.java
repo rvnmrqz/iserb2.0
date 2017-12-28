@@ -15,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -42,8 +44,10 @@ import java.util.Map;
 public class Fragment_Worker_works extends Fragment {
 
     static Context context;
-
-    LinearLayout layoutLoading,layoutCurrent;
+    static SwipeRefreshLayout layoutWorkList;
+    static LinearLayout layoutLoading,layoutCurrent;
+    static ProgressBar loadingProgressBar;
+    static TextView loadingTextViewMessage;
     SwipeRefreshLayout swipeRefreshLayout;
 
     static String worker_id = "";
@@ -74,7 +78,7 @@ public class Fragment_Worker_works extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment__worker_works, container, false);
+        return inflater.inflate(R.layout.fragment_worker_works, container, false);
     }
 
     @Override
@@ -83,6 +87,10 @@ public class Fragment_Worker_works extends Fragment {
         swipeRefreshLayout = view.findViewById(R.id.works_layout_list);
         layoutLoading = view.findViewById(R.id.works_layout_loading);
         layoutCurrent = view.findViewById(R.id.works_layout_current);
+        layoutWorkList = view.findViewById(R.id.works_layout_list);
+
+        loadingProgressBar = view.findViewById(R.id.works_layout_loading_progress);
+        loadingTextViewMessage = view.findViewById(R.id.works_layout_loading_msg);
 
         recyclerView = getActivity().findViewById(R.id.workList_recycler);
         objectBookingRequestList = new ArrayList<>();
@@ -91,7 +99,6 @@ public class Fragment_Worker_works extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter_booking);
-
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(SharedPrefConfig.SHAREDPREFNAME,Context.MODE_PRIVATE);
         worker_id = sharedPreferences.getString(SharedPrefConfig.USER_ID,"");
@@ -102,7 +109,7 @@ public class Fragment_Worker_works extends Fragment {
 
     protected void checkPendings(){
         Log.wtf("checkPendings","Called");
-
+        showLoadingLayout(true,true,null);
         String server_url = ServerDataHolder.serverUrl+"get_data.php";
         requestQueue = Volley.newRequestQueue(context);
         stringRequest = new StringRequest(Request.Method.POST, server_url,
@@ -121,12 +128,17 @@ public class Fragment_Worker_works extends Fragment {
 
                                     String serviceid = Jasonobject.getString("service_id");
                                     String serviceDescription = Jasonobject.getString("skill_description");
-                                    String reqDateTime = Jasonobject.getString("date_time_requested");
-                                    String customerName = Jasonobject.getString("fname") + Jasonobject.getString("lname");
+                                    String reqDateTime =  Jasonobject.getString("date_time_requested");
+                                    String customerName = Jasonobject.getString("fname") +" "+ Jasonobject.getString("lname");
                                     object_bookingRequest = new Object_BookingRequest(serviceid,serviceDescription,reqDateTime,customerName);
                                     objectBookingRequestList.add(object_bookingRequest);
                                 }
                                 adapter_booking.notifyDataSetChanged();
+                                showLoadingLayout(false,false,null);
+                                layoutWorkList.setVisibility(View.VISIBLE);
+                            }else{
+                                //show no work(s) yet
+                                showLoadingLayout(true,false,"No work request(s) yet");
                             }
 
                         }catch (Exception e){
@@ -156,6 +168,23 @@ public class Fragment_Worker_works extends Fragment {
         stringRequest.setShouldCache(false);
         requestQueue.add(stringRequest);
     }
+
+    private static void showLoadingLayout(boolean showLayout, boolean showProgress, String msgText){
+        if(showLayout){
+            layoutLoading.setVisibility(View.VISIBLE);
+            if(showProgress) loadingProgressBar.setVisibility(View.VISIBLE);
+            else loadingProgressBar.setVisibility(View.GONE);
+
+            if(msgText!=null){
+                loadingTextViewMessage.setText(msgText);
+                loadingTextViewMessage.setVisibility(View.VISIBLE);
+            }
+            else loadingTextViewMessage.setVisibility(View.GONE);
+        }else{
+            layoutLoading.setVisibility(View.GONE);
+        }
+    }
+
     public static void checkIfTheresCurrentWork(){
         Log.wtf("Check","checkIfThereCurrentWork");
         String server_url = ServerDataHolder.serverUrl+"get_data.php";
@@ -182,6 +211,11 @@ public class Fragment_Worker_works extends Fragment {
                                     objectBookingRequestList.add(object_bookingRequest);
                                 }
                                 adapter_booking.notifyDataSetChanged();
+                                showLoadingLayout(false,false,null);
+                                layoutWorkList.setVisibility(View.VISIBLE);
+                            }else{
+                                //show no works yet
+                                showLoadingLayout(true,false,"No work request(s) yet");
                             }
 
                         }catch (Exception e){

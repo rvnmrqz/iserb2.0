@@ -253,7 +253,7 @@ public class Service_Notification_Worker extends Service {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.wtf("NotificationService","An error occured in requestQue \nError\n"+error.getMessage()+"\nCause: "+error.getCause());
+                            Log.wtf(TAG,"An error occured in requestQue \nError\n"+error.getMessage()+"\nCause: "+error.getCause());
                             restartCounting();
                         }
                     }){
@@ -275,31 +275,32 @@ public class Service_Notification_Worker extends Service {
             stringRequest.setShouldCache(false);
             requestQueue.add(stringRequest);
         }catch (Exception e){
-            Log.wtf("ServiceNotification_TRUCK","doWork Exception: "+e.getMessage());
+            Log.wtf(TAG," doWork Exception: "+e.getMessage());
             restartCounting();
         }catch (Throwable t){
             restartCounting();
-            Log.wtf("ServiceNotification_TRUCK","doWork Throwable: "+t.getMessage());
+            Log.wtf(TAG,"doWork Throwable: "+t.getMessage());
         }
     }
 
     protected void updateDelivered(){
-        Log.wtf("updateDeliveredReportsNotif()","CALLED");
+        stopCounting();
+        Log.wtf(TAG,"updateDeliveredReportsNotif(): CALLED");
         String url = ServerDataHolder.serverUrl+"/do_query.php";
         RequestQueue requestQueue  = Volley.newRequestQueue(this);
-        StringRequest request = new StringRequest(Request.Method.POST, url
-                , new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.wtf("updateDeliveredReportsNotif()","Response: "+response);
-            }
-        }, new Response.ErrorListener() {
+                    restartCounting();
+                }
+            }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.wtf("updateDeliveredReportsNotif()","Error: "+getVolleyError(error));
 
-            }
-        }){
+            }})
+            {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
@@ -313,7 +314,7 @@ public class Service_Notification_Worker extends Service {
                 }
                 String query = "UPDATE service_transactions SET delivered = 1 WHERE service_id IN("+entries+");";
                 Log.wtf("updateDeliveredReportsNotif()","Map<String><String>, Query: "+query);
-                params.put("query",query);
+                params.put("qry",query);
                 return params;
             }
         };
@@ -325,6 +326,7 @@ public class Service_Notification_Worker extends Service {
         request.setShouldCache(false);
         requestQueue.add(request);
     }
+
     protected String getVolleyError(VolleyError volleyError){
         String message="";
         if (volleyError instanceof NetworkError) {

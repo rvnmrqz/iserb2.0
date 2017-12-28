@@ -113,7 +113,7 @@
                             android:textStyle="bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Skill Offered:" />
+                            android:text="Service Requested:" />
                         <TextView
                             android:id="@+id/txtSkillname"
                             android:layout_width="wrap_content"

@@ -94,6 +94,7 @@ public class MainActivity_Consumer extends AppCompatActivity implements FragNavC
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if(SharedPrefConfig.clearUserData(MainActivity_Consumer.this)){
                             startActivity(new Intent(MainActivity_Consumer.this,Login.class));
+                            stopService(new Intent(MainActivity_Consumer.this,Service_Notification_Worker.class));
                             finish();
                         }
                     }

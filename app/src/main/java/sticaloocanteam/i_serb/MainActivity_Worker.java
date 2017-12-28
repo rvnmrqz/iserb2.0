@@ -148,6 +148,8 @@ public class MainActivity_Worker extends AppCompatActivity implements FragNavCon
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if(SharedPrefConfig.clearUserData(MainActivity_Worker.this)){
+                            startActivity(new Intent(MainActivity_Worker.this,Login.class));
+                            stopService(new Intent(MainActivity_Worker.this,Service_Notification_Worker.class));
                             finish();
                         }
                     }

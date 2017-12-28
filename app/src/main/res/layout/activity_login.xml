@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="sticaloocanteam.i_serb.Login">
+
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:layout_margin="16dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/login_icon"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/banner"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="24dp"/>
+        <EditText
+            android:textAlignment="center"
+            android:hint="Username"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:id="@+id/txtUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <com.scottyab.showhidepasswordedittext.ShowHidePasswordEditText
+            android:textAlignment="center"
+            android:id="@+id/txtPassword"
+            android:fontFamily="sans-serif"
+            app:tint_color="@color/colorPrimary"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:id="@+id/btnSign-in"
+            android:text="Sign-in"
+            android:textColor="@color/colorFontPrimary"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

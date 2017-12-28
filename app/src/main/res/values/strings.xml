@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">i-SERB</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_main__worker">MainActivity_Worker</string>
+    <string name="title_activity_login">Login</string>
+
+    <string-array name="location_options">
+        <item>Any Where</item>
+        <item>My Registered Address</item>
+        <item>My Current Location</item>
+    </string-array>
+
+    //update this after screenshots
+    <string-array name="categories">
+        <item>Automotive</item>
+        <item>Electronics</item>
+        <item>Heating, Ventilation,Airconditioning and Refrigiration</item>
+        <item>Human Healthcare</item>
+        <item>House-hold service</item>
+        <item>Education</item>
+    </string-array>
+
+    <string-array name="sub_category">
+        <item>Auto1</item>
+        <item>Auto2</item>
+        <item>Auto3</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

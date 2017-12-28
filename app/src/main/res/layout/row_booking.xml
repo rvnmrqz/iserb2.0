@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/card"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <!--SERVICE ID-->
+    <TextView
+        android:id="@+id/txtService_id"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <!--CLIENT-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Client:"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/txtCustomerName"
+            android:text="Mary Ann Darlene Magbitang"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--SERVICE BOOKED-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Service Booked:"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="Skill Description"
+            android:id="@+id/txtServiceDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--TIME & DATE BOOKED-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Time and Date "
+            android:layout_width="110dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/txtReqTimeDate"
+            android:text="10:23 pm 08-27-2017"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--BUTTONS-->
+   <LinearLayout
+       android:orientation="horizontal"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <Button
+           android:id="@+id/btnReject"
+           android:textColor="@color/colorFontPrimary"
+           android:backgroundTint="@color/colorPrimary"
+           android:layout_weight="1"
+           android:text="Reject"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+       <Button
+           android:id="@+id/btnAccept"
+           android:textColor="@color/colorFontPrimary"
+           android:text="Accept"
+           android:backgroundTint="@color/colorPrimary"
+           android:layout_weight="1"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content" />
+   </LinearLayout>
+</LinearLayout>
